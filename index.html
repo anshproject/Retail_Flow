@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RetailFlow</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- LOGIN PAGE -->
+<section id="loginPage" class="login-page">
+  <div class="login-brand">
+    <div class="brand-heading"><span class="brand-cart">🛒</span>
+      <div><b>RetailFlow</b></div>
+    </div>
+    <p>Smarter Inventory &nbsp;•&nbsp; Better Decisions &nbsp;•&nbsp; Higher Profits</p>
+    <div class="login-features">
+      <div><span class="round blue">▣</span><b>Inventory</b><small>Track stock in real-time</small></div>
+      <div><span class="round green">▥</span><b>Sales Analytics</b><small>Know what sells</small></div>
+      <div><span class="round yellow">🔔</span><b>Smart Alerts</b><small>Never run out</small></div>
+      <div><span class="round purple">♧</span><b>Decision Support</b><small>Take the right action</small></div>
+    </div>
+    <div class="login-photo">
+    <div class="login-illustration">
+      <div class="ill-bg">
+        <div class="ill-store">
+          <div class="ill-roof">🏪</div>
+          <div class="ill-body">
+            <div class="ill-shelf"><span>📦</span><span>🛒</span><span>📊</span></div>
+            <div class="ill-shelf"><span>💰</span><span>📈</span><span>🎯</span></div>
+          </div>
+        </div>
+        <h2>RetailFlow Manager</h2>
+        <p>Inventory · Sales · Analytics · RBAC</p>
+        <div class="ill-stats">
+          <div><b>99.9%</b><small>Uptime</small></div>
+          <div><b>Real-time</b><small>Data</small></div>
+          <div><b>Secure</b><small>Auth</small></div>
+        </div>
+      </div>
+    </div>
+    </div>
+    <div class="manage">Manage today.<br>Grow tomorrow.</div>
+  </div>
+
+  <div class="login-box">
+    <div class="person">♙</div>
+    <h1>Welcome Back</h1>
+    <p>Login to your account to continue</p>
+    <p id="loginError" class="login-error hidden"></p>
+    <form id="loginForm">
+      <label>Username</label>
+      <div class="input"><span>👤</span><input id="loginUsername" required placeholder="Enter your username"></div>
+      <label>Password</label>
+      <div class="input"><span>🔑</span><input id="password" required type="password" placeholder="Enter your password"><button type="button" id="showPassword">◉</button></div>
+      <div class="login-row">
+        <label class="remember"><input type="checkbox" id="rememberMe" checked> Remember me</label>
+        <a href="#" onclick="event.preventDefault(); alert('Ask an admin to reset your password from Settings.')">Forgot password?</a>
+      </div>
+      <button class="login-submit">Login <b>→</b></button>
+    </form>
+    <p class="login-hint"><b></b>  <b></b> </p>
+  </div>
+</section>
+
+<!-- DASHBOARD AFTER LOGIN -->
+<section id="dashboardPage" class="dashboard-page hidden">
+  <aside class="sidebar">
+    <div class="side-brand"><span>🛒</span><b>RetailFlow</b></div>
+    <nav>
+      <button class="nav active" data-page="dashboardPage" data-nav-page="dashboardPage"><span>Dashboard</span></button>
+      <button class="nav" data-page="inventoryPage" data-nav-page="inventoryPage"><span>Inventory</span></button>
+      <button class="nav" data-page="salesPage" data-nav-page="salesPage"><span>Sales</span></button>
+      <button class="nav" data-page="warehousePage" data-nav-page="warehousePage"><span>Storage / Warehouse</span></button>
+      <button class="nav" data-page="suppliersPage" data-nav-page="suppliersPage"><span>Suppliers</span></button>
+      <button class="nav" data-page="alertsPage" data-nav-page="alertsPage"><span>Alerts</span><em id="alertNavBadge">0</em></button>
+      <button class="nav" data-page="analyticsPage" data-nav-page="analyticsPage"><span>Analytics</span></button>
+      <button class="nav" data-page="reportsPage" data-nav-page="reportsPage"><span>Reports</span></button>
+      <button class="nav" data-page="settingsPage" data-nav-page="settingsPage"><span>Settings</span></button>
+    </nav>
+    
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div class="search">⌕ <input placeholder="Search products, suppliers, reports..."></div>
+      <div class="top-user"><span class="bell">♧<em>3</em></span><span class="avatar">●</span><div><b id="currentRoleLabel">Admin</b><small id="currentUserLabel">Signed in</small></div><button id="logoutBtn" class="logout-btn" type="button">⏻</button></div>
+    </header>
+
+    <div class="content">
+      <div class="welcome-row">
+        <div><h1>Welcome Back, <span id="dashWelcomeName">Admin</span>!</h1><p>Here's what's happening in your store today.</p></div>
+        <div class="filters live-clock-box">
+          <div class="live-date" id="liveDateStr">—</div>
+          <div class="live-time" id="liveTimeStr">—</div>
+        </div>
+      </div>
+
+      <section class="stats">
+        <div class="stat"><span class="stat-icon green">◇</span><b>Total Products</b><strong>248</strong><small class="up">↑ 12% <i>vs last week</i></small></div>
+        <div class="stat"><span class="stat-icon blue">🛒</span><b>Total Sales (Today)</b><strong>₹ 48,750</strong><small class="up">↑ 8% <i>vs yesterday</i></small></div>
+        <div class="stat"><span class="stat-icon purple">⌂</span><b>Store Stock Value</b><strong>₹ 2,35,600</strong><small class="up">↑ 5% <i>vs last week</i></small></div>
+        <div class="stat"><span class="stat-icon orange">◇</span><b>Warehouse Stock</b><strong>₹ 4,12,300</strong><small class="up">↑ 3% <i>vs last week</i></small></div>
+        <div class="stat"><span class="stat-icon pink">♧</span><b>Active Alerts</b><strong>7</strong><small class="down">↓ 4% <i>vs last week</i></small></div>
+      </section>
+
+      <section class="middle-grid">
+        <div class="card sales-card">
+          <div class="card-title">
+            <div><h2>&nbsp;Sales Overview</h2><small id="salesChartSubtitle">Daily sales (last 7 days)</small></div>
+            <div class="chart-tabs">
+              <button class="chart-tab active" data-days="7">7D</button>
+              <button class="chart-tab" data-days="14">14D</button>
+              <button class="chart-tab" data-days="30">30D</button>
+            </div>
+          </div>
+          <div class="chart">
+            <div class="y-labels"><span></span><span></span><span></span><span></span><span>₹0</span></div>
+            <svg viewBox="0 0 650 230" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#2563eb" stop-opacity="0.25"/>
+                  <stop offset="100%" stop-color="#2563eb" stop-opacity="0.02"/>
+                </linearGradient>
+              </defs>
+              <g class="gridlines">
+                <line x1="40" y1="20" x2="630" y2="20"/>
+                <line x1="40" y1="70" x2="630" y2="70"/>
+                <line x1="40" y1="120" x2="630" y2="120"/>
+                <line x1="40" y1="170" x2="630" y2="170"/>
+                <line x1="40" y1="215" x2="630" y2="215"/>
+              </g>
+              <path class="area" d=""/>
+              <polyline class="line" points=""/>
+              <g class="dots"></g>
+            </svg>
+            <div class="x-labels"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+          </div>
+          <div class="chart-summary">
+            <div class="cs-item"><small>Total (period)</small><b id="chartTotalRevenue">₹0</b></div>
+            <div class="cs-item"><small>Peak Day</small><b id="chartPeakDay">—</b></div>
+            <div class="cs-item"><small>Avg / Day</small><b id="chartAvgDay">₹0</b></div>
+          </div>
+        </div>
+
+        <div class="card stock-card">
+          <div class="card-title"><div><h2>♧ &nbsp;Stock Distribution</h2><small>Store vs Warehouse</small></div></div>
+          <div class="stock-body">
+            <div class="donut"><div><b>Total Units</b><strong id="donutTotal">—</strong></div></div>
+            <div class="legend">
+              <span><i class="dot blue-dot"></i>Store Stock<br><b id="legendStore">—</b></span>
+              <span><i class="dot green-dot"></i>Warehouse Stock<br><b id="legendWarehouse">—</b></span>
+            </div>
+          </div>
+          <div class="stock-footer">
+            <div><small>Store Value</small><b id="stockStoreValue">₹0</b></div>
+            <div><small>Warehouse Value</small><b id="stockWhValue">₹0</b></div>
+          </div>
+        </div>
+
+        <div class="card alerts-card">
+          <div class="card-title"><h2>🔔 &nbsp;Recent Alerts</h2><a href="#" data-page="alertsPage">View All →</a></div>
+        </div>
+      </section>
+
+      <section class="bottom-grid">
+        <div class="card table-card">
+          <div class="card-title"><h2>🏆 &nbsp;Top Selling Products</h2><small>Last 30 days</small></div>
+          <div class="table-head"><span>#</span><span>Product</span><span>Units Sold</span><span>Revenue</span></div>
+        </div>
+
+        <div class="card table-card low-card">
+          <div class="card-title"><h2>⚠️ &nbsp;Low Stock Products</h2><a href="#" data-page="alertsPage">View All →</a></div>
+          <div class="table-head"><span>Product</span><span>In Store</span><span>Min. Required</span></div>
+        </div>
+
+        <div class="card quick-card">
+          <div class="card-title"><h2>⚡ &nbsp;Quick Actions</h2></div>
+          <div class="quick-grid">
+            <button class="q green-q" data-permission="products">◇ <span>Add Product</span> →</button>
+            <button class="q blue-q" data-permission="purchases">▣ <span>Create Purchase<br>Order</span> →</button>
+            <button class="q purple-q" data-permission="transfers">⇄ <span>Transfer Stock</span> →</button>
+            <button class="q blue-q" data-page="reportsPage">▥ <span>View Reports</span> →</button>
+            <button class="q orange-q" data-page="suppliersPage">♙ <span>Manage Suppliers</span> →</button>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+</section>
+
+<!-- INVENTORY MANAGEMENT PAGE -->
+<section id="inventoryPage" class="app-page hidden">
+  <aside class="sidebar"></aside>
+  <main class="main">
+    <header class="topbar"></header>
+    <div class="content">
+      <div class="welcome-row">
+        <div><h1>&nbsp;Inventory Management</h1><p>Manage your products, stock levels and inventory across store and warehouse.</p></div>
+        <div class="filters"><button id="addLocationBtn" data-permission="locations">＋ Add Location</button><button class="primary-btn" id="addProductBtn" data-permission="products">＋ Add Product</button></div>
+      </div>
+      <section class="stats inv-stats">
+        <div class="stat"><span class="stat-icon green">◇</span><b>Total Products</b><strong>248</strong><small class="up">+12 added this month</small></div>
+        <div class="stat"><span class="stat-icon blue">▣</span><b>Store Stock Value</b><strong>₹ 2,35,600</strong><small class="up">+5% vs last week</small></div>
+        <div class="stat"><span class="stat-icon purple">⌂</span><b>Warehouse Stock Value</b><strong>₹ 4,12,300</strong><small class="up">+3% vs last week</small></div>
+        <div class="stat"><span class="stat-icon orange">⚠</span><b>Low Stock Items</b><strong>18</strong><small class="down">Needs attention</small></div>
+      </section>
+      <section class="inventory-layout">
+        <div>
+          <div class="card filter-card">
+            <div class="search large-search">⌕ <input id="inventorySearch" placeholder="Search by product name, SKU or barcode..."></div>
+            <label>Category<select id="categoryFilter"><option>All Categories</option><option>Beverages</option><option>Snacks</option><option>Food</option><option>Bakery</option><option>Dairy</option></select></label>
+            <label>Stock Status<select id="stockFilter"><option>All Status</option><option>Normal</option><option>Low Stock</option><option>Out of Stock</option></select></label>
+            <button id="resetInventory">↻ Reset</button>
+          </div>
+          <div class="card inventory-table">
+            <div class="table-title"><h2>Product Inventory</h2><small id="inventoryCount">Showing 1–10 of 248 products</small></div>
+            <div class="inv-head"><span>□</span><span>Product</span><span>Category</span><span>SKU</span><span>Store</span><span>Warehouse</span><span>Total</span><span>Price (₹)</span><span>Status</span><span>Actions</span></div>
+            <div id="inventoryRows"></div>
+          </div>
+        </div>
+        <aside class="inventory-side">
+          <div class="card side-widget"><h2>Stock Status Summary</h2><div class="mini-donut"><b>248</b><small>Total Products</small></div><p>🟢 Normal <span>198 (79.8%)</span></p><p>🟠 Low Stock <span>32 (12.9%)</span></p><p>🔴 Out of Stock <span>11 (4.4%)</span></p><p>⚪ Others <span>7 (2.8%)</span></p></div>
+          <div class="card side-widget"><h2>Quick Filters</h2><div class="quick-filter">🔵 Beverages <span>42 ›</span></div><div class="quick-filter">🔷 Snacks <span>68 ›</span></div><div class="quick-filter">🔵 Food <span>56 ›</span></div><div class="quick-filter">🟧 Bakery <span>18 ›</span></div><div class="quick-filter">🟩 Dairy <span>24 ›</span></div><div class="quick-filter">🔵 Others <span>40 ›</span></div></div>
+          <div class="card side-widget"><h2>Recent Stock Alerts <a href="#" data-page="alertsPage">View All →</a></h2><div class="side-alert">🔴 Bread <small>Store stock is below minimum (7 units)</small></div><div class="side-alert">🔴 Mineral Water <small>Store stock is below minimum (8 units)</small></div><div class="side-alert">🟠 Maggi <small>About to expire in 5 days</small></div><div class="side-alert">🔴 Potato Chips <small>Warehouse stock is low (25 units)</small></div></div>
+        </aside>
+      </section>
+    </div>
+  </main>
+</section>
+
+<!-- SMART ALERTS PAGE -->
+<section id="alertsPage" class="app-page hidden">
+  <aside class="sidebar"></aside>
+  <main class="main">
+    <header class="topbar"></header>
+    <div class="content">
+      <div class="welcome-row">
+        <div><h1>🔔 &nbsp;Smart Alerts & Notifications</h1><p>Stay informed about stock levels, expiry dates, supplier updates and more.</p></div>
+        <div class="filters"><button id="alertDateRangeBtn">📅 &nbsp;<span id="alertDateRange">Loading...</span></button></div>
+      </div>
+      <section class="stats alert-stats">
+        <div class="stat"><span class="stat-icon orange">〽️</span><b>Low Stock</b><strong id="aStatLow">—</strong><small>Products need attention</small></div>
+        <div class="stat"><span class="stat-icon pink">🚫</span><b>Out of Stock</b><strong id="aStatOut">—</strong><small>Products are out of stock</small></div>
+        <div class="stat"><span class="stat-icon purple">⌛</span><b>Expiry Risk</b><strong id="aStatExpiry">—</strong><small>Coming Soon</small></div>
+        <div class="stat"><span class="stat-icon blue">🚚</span><b>Supplier Alerts</b><strong id="aStatSupplier">—</strong><small>Pending updates</small></div>
+        <div class="stat"><span class="stat-icon pink">⚠️</span><b>Critical Alerts</b><strong id="aStatCritical">—</strong><small>Requires immediate action</small></div>
+      </section>
+      <section class="alerts-layout">
+        <div class="card alert-list-card">
+          <div class="card-title">
+            <h2>🔔 &nbsp;Recent Alerts</h2>
+            <div class="alert-tab-group" id="alertTabGroup">
+              <button class="atab active" data-filter="all">All <span id="tabCountAll">—</span></button>
+              <button class="atab" data-filter="low_stock">Low Stock <span id="tabCountLow">—</span></button>
+              <button class="atab" data-filter="out_of_stock">Out of Stock <span id="tabCountOut">—</span></button>
+              <button class="atab" data-filter="critical">Critical <span id="tabCountCritical">—</span></button>
+            </div>
+          </div>
+          <div class="alert-table-head">
+            <span>Type</span><span>Product</span><span>Details</span><span>Severity</span><span>Date</span><span>Action</span>
+          </div>
+          <div id="alertRows"><div class="empty-state">Loading alerts...</div></div>
+        </div>
+        <aside>
+          <div class="card recommendation">
+            <h2>✦ Smart Recommendations</h2>
+            <p>Rule-based decisions; ML forecasting is <b>Coming Soon</b>.</p>
+            <div id="alertRecommendations"><div class="empty-state">Loading...</div></div>
+          </div>
+          <div class="card quick-filters">
+            <h2>Quick Filters <a id="clearAlertFilter" style="cursor:pointer;font-size:12px;color:#2563eb">Clear All</a></h2>
+            <div class="period">
+              <button class="afilt active" data-status="open">Open</button>
+              <button class="afilt" data-status="all">All Time</button>
+            </div>
+            <div class="filter-columns" style="margin-top:14px">
+              <div><b>Priority</b>
+                <label style="display:block;margin:6px 0;font-size:12px"><input type="checkbox" class="sev-filter" value="critical"> 🔴 Critical</label>
+                <label style="display:block;margin:6px 0;font-size:12px"><input type="checkbox" class="sev-filter" value="high"> 🟠 High</label>
+                <label style="display:block;margin:6px 0;font-size:12px"><input type="checkbox" class="sev-filter" value="warning"> 🟢 Warning</label>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </section>
+    </div>
+  </main>
+</section>
+
+<!-- Add product modal -->
+<div id="productModal" class="modal hidden"><div class="modal-box"><button class="close" type="button">×</button><h2>Add Product</h2><label>Product Name<input id="newProductName" required placeholder="e.g. Cold Coffee"></label><label>SKU<input id="newProductSku" required placeholder="e.g. BEV-001"></label><label>Category<input id="newProductCategory" placeholder="e.g. Beverages"></label><label>Unit Price (₹)<input id="newProductPrice" type="number" min="0" step="0.01" value="0"></label><label>Reorder Point<input id="newProductReorder" type="number" min="0" value="0"></label><button class="primary-btn" id="saveProduct">Add Product</button></div></div>
+<div id="actionModal" class="modal hidden"></div>
+<div id="toast" class="toast hidden" role="status"></div>
+
+<!-- SALES PAGE -->
+<section id="salesPage" class="app-page hidden">
+  <aside class="sidebar"></aside><main class="main"><header class="topbar"></header><div class="content">
+    <div class="welcome-row"><div><h1>Sales Management</h1><p>Track transactions, revenue and product performance.</p></div><div class="filters"><button>📆 This Month</button><button id="newSaleBtn" class="primary-btn" data-permission="sales">＋ New Sale</button></div></div>
+    <section class="stats">
+      <div class="stat"><span class="stat-icon blue">₹</span><b>Sales Today</b><strong id="salesTodayStat">—</strong><small id="salesTodaySmall">Loading...</small></div>
+      <div class="stat"><span class="stat-icon green">▥</span><b>Transactions</b><strong id="salesTxCount">—</strong><small id="salesTxSmall">Last 7 days</small></div>
+      <div class="stat"><span class="stat-icon purple">♛</span><b>Avg Order Value</b><strong id="salesAvgOrder">—</strong><small>Per transaction</small></div>
+      <div class="stat"><span class="stat-icon orange">★</span><b>Top Product</b><strong id="salesTopProduct">—</strong><small id="salesTopUnits">This month</small></div>
+    </section>
+    <div class="module-grid two">
+      <div class="card big-chart">
+        <div class="card-title">
+          <h2>Revenue Overview</h2>
+          <div class="chart-tabs">
+            <button class="chart-tab sales-tab active" data-days="7">7D</button>
+            <button class="chart-tab sales-tab" data-days="14">14D</button>
+            <button class="chart-tab sales-tab" data-days="30">30D</button>
+          </div>
+        </div>
+        <div class="bar-chart" id="salesBarChart"><div class="empty-state">Loading...</div></div>
+      </div>
+      <div class="card">
+        <div class="card-title"><h2>Sales by Category</h2></div>
+        <div class="category-bars" id="salesCategoryBars"><div class="empty-state">Loading...</div></div>
+      </div>
+    </div>
+    <div class="card table-card">
+      <div class="card-title"><h2>Recent Transactions</h2></div>
+      <div class="data-table">
+        <div class="data-head">Invoice | Product | Qty | Amount | Location | Date</div>
+        <div id="salesTxTable"><div class="empty-state">Loading...</div></div>
+      </div>
+    </div>
+  </div></main>
+</section>
+
+<!-- WAREHOUSE PAGE -->
+<section id="warehousePage" class="app-page hidden">
+  <aside class="sidebar"></aside><main class="main"><header class="topbar"></header><div class="content">
+    <div class="welcome-row"><div><h1>Storage / Warehouse</h1><p>Manage storage stock, transfers and multi-location balancing.</p></div><button id="transferBtn" class="primary-btn" data-permission="transfers">⇄ Create Transfer</button></div>
+    <section class="stats">
+      <div class="stat"><span class="stat-icon blue">▣</span><b>Warehouse Units</b><strong id="whUnits">—</strong><small id="whLocLabel">Loading...</small></div>
+      <div class="stat"><span class="stat-icon green">₹</span><b>Stock Value</b><strong id="whValue">—</strong><small>Warehouse inventory</small></div>
+      <div class="stat"><span class="stat-icon purple">⇄</span><b>Pending Transfers</b><strong id="whPendingTx">—</strong><small id="whPendingLabel">Awaiting completion</small></div>
+      <div class="stat"><span class="stat-icon orange">⚠</span><b>Low in Store</b><strong id="whAtRisk">—</strong><small>Need transfer from warehouse</small></div>
+    </section>
+    <div class="card table-card">
+      <div class="card-title"><h2>Recent Transfers</h2></div>
+      <div class="data-head" style="display:grid;grid-template-columns:60px 2fr 1.5fr 1.5fr 80px 100px 100px;gap:8px;padding:10px 12px;background:#f8fbfe;border-bottom:1px solid #e4edf5;font-size:11px;font-weight:700;color:#526c8b">
+        <span>#</span><span>Product</span><span>From</span><span>To</span><span>Qty</span><span>Status</span><span>Date</span>
+      </div>
+      <div id="transferTable"><div class="empty-state">No transfers recorded yet. Use the button above to create one.</div></div>
+    </div>
+    <div class="card" id="whAtRiskCard" style="margin-top:16px">
+      <div class="card-title"><h2>⚠ Items Low in Store — Transfer from Warehouse</h2><small>Products below reorder point in store but available in warehouse</small></div>
+      <div class="data-head" style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr 120px;gap:8px;padding:10px 12px;background:#f8fbfe;border-bottom:1px solid #e4edf5;font-size:11px;font-weight:700;color:#526c8b">
+        <span>Product</span><span>Store Stock</span><span>Reorder Point</span><span>Warehouse Stock</span><span>Action</span>
+      </div>
+      <div id="whRiskRows"><div class="empty-state">Loading...</div></div>
+    </div>
+    <div class="coming-soon-banner"><b>🚧 Coming Soon</b>Multi-Location Stock Balancer, Waste Rescue Engine, and Location-wise Stock Charts will be available in the next update.</div>
+  </div></main>
+</section>
+
+<!-- SUPPLIERS PAGE -->
+<section id="suppliersPage" class="app-page hidden">
+  <aside class="sidebar"></aside><main class="main"><header class="topbar"></header><div class="content">
+    <div class="welcome-row"><div><h1>Supplier Management</h1><p>Manage suppliers, lead times and purchase/restock requests.</p></div><button id="purchaseBtn" class="primary-btn" data-permission="purchases">＋ Create Purchase Order</button></div>
+    <section class="stats">
+      <div class="stat"><span class="stat-icon blue">▣</span><b>Active Suppliers</b><strong id="supCount">—</strong><small>Across categories</small></div>
+      <div class="stat"><span class="stat-icon orange">◷</span><b>Pending Orders</b><strong id="supPending">—</strong><small>Awaiting confirmation</small></div>
+      <div class="stat"><span class="stat-icon green">✓</span><b>On-Time Delivery</b><strong>—</strong><small>Coming Soon</small></div>
+      <div class="stat"><span class="stat-icon purple">◉</span><b>Avg Lead Time</b><strong id="supAvgLead">—</strong><small>Current average</small></div>
+    </section>
+    <div class="card table-card">
+      <div class="card-title">
+        <h2>Supplier Directory</h2>
+        <div style="display:flex;gap:8px;align-items:center">
+          <div class="search mini"><input id="supplierSearch" placeholder="Search suppliers..." oninput="filterSuppliers(this.value)"></div>
+          <button class="primary-btn" id="addSupplierBtn">+ Add Supplier</button>
+        </div>
+      </div>
+      <div class="data-table" id="supplierTable">
+        <div class="data-head"><span>Supplier</span><span>Contact</span><span>Email</span><span>Lead Time</span><span>Action</span></div>
+        <div id="supplierRows"><div class="empty-state">No suppliers added yet.</div></div>
+      </div>
+    </div>
+    <div class="coming-soon-banner"><b>🚧 Coming Soon</b>Supplier alerts, auto purchase recommendations, and delivery tracking will be available in the next update.</div>
+  </div></main>
+</section>
+
+<!-- ANALYTICS PAGE -->
+<section id="analyticsPage" class="app-page hidden">
+  <aside class="sidebar"></aside><main class="main"><header class="topbar"></header><div class="content">
+    <div class="welcome-row"><div><h1>Analytics & Decision Support</h1><p>Turn inventory data into demand, risk and action insights.</p></div></div>
+    <div class="coming-soon-banner" style="padding:48px 24px;margin-top:16px">
+      <b style="font-size:28px">🚧 Analytics — Coming Soon</b>
+      <p style="margin:14px 0 0;font-size:15px;color:#4e7db5">The following features are under development and will be available in a future update:</p>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px;text-align:left">
+        <div style="background:white;border-radius:8px;padding:14px"><b>📈 Stock Survival Clock</b><p style="margin:6px 0 0;font-size:12px;color:#6b84a0">Predict how many days each product will last based on current sales rate.</p></div>
+        <div style="background:white;border-radius:8px;padding:14px"><b>🔮 What-If Simulator</b><p style="margin:6px 0 0;font-size:12px;color:#6b84a0">Test demand scenarios (promotions, festivals) before making purchase decisions.</p></div>
+        <div style="background:white;border-radius:8px;padding:14px"><b>♻️ Waste Rescue Engine</b><p style="margin:6px 0 0;font-size:12px;color:#6b84a0">Auto-detect near-expiry items and recommend transfers to higher-demand locations.</p></div>
+        <div style="background:white;border-radius:8px;padding:14px"><b>📊 Demand Trends</b><p style="margin:6px 0 0;font-size:12px;color:#6b84a0">Category-level trend analysis with week-over-week comparison.</p></div>
+        <div style="background:white;border-radius:8px;padding:14px"><b>🎯 Adaptive Reorder</b><p style="margin:6px 0 0;font-size:12px;color:#6b84a0">Auto-adjust reorder points based on seasonal demand patterns.</p></div>
+        <div style="background:white;border-radius:8px;padding:14px"><b>🔔 Alert Escalation</b><p style="margin:6px 0 0;font-size:12px;color:#6b84a0">Unresolved alerts auto-escalate from employee → manager → owner.</p></div>
+      </div>
+    </div>
+  </div></main>
+</section>
+
+<!-- REPORTS PAGE -->
+<section id="reportsPage" class="app-page hidden">
+  <aside class="sidebar"></aside><main class="main"><header class="topbar"></header><div class="content">
+    <div class="welcome-row"><div><h1>Reports</h1><p>Generate business, inventory, sales and supplier reports.</p></div><button id="reportBtn" class="primary-btn">⇩ Generate Report</button></div>
+    <div class="coming-soon-banner" style="padding:48px 24px;margin-top:16px">
+      <b style="font-size:28px">🚧 Reports — Coming Soon</b>
+      <p style="margin:14px 0 0;font-size:15px;color:#4e7db5">PDF and Excel report generation is under development. The following reports will be available soon:</p>
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:20px;text-align:left">
+        <div style="background:white;border-radius:8px;padding:14px"><b>📊 Sales Report</b><p style="margin:6px 0 0;font-size:12px;color:#6b84a0">Daily, weekly and monthly revenue, transactions and category performance.</p></div>
+        <div style="background:white;border-radius:8px;padding:14px"><b>📦 Inventory Health</b><p style="margin:6px 0 0;font-size:12px;color:#6b84a0">Healthy, low, excess, out-of-stock and expiry-risk inventory report.</p></div>
+        <div style="background:white;border-radius:8px;padding:14px"><b>🏭 Supplier Performance</b><p style="margin:6px 0 0;font-size:12px;color:#6b84a0">Lead time, delivery performance and open purchase requests.</p></div>
+        <div style="background:white;border-radius:8px;padding:14px"><b>🎯 Decision Support</b><p style="margin:6px 0 0;font-size:12px;color:#6b84a0">Recommended transfers, purchase queue, stockout risks and waste rescue.</p></div>
+      </div>
+    </div>
+  </div></main>
+</section>
+
+<!-- SETTINGS PAGE -->
+<section id="settingsPage" class="app-page hidden">
+  <aside class="sidebar"></aside><main class="main"><header class="topbar"></header><div class="content">
+    <div class="welcome-row"><div><h1>Settings / User Management</h1><p>Manage users, roles and permissions.</p></div><button id="userBtn" class="primary-btn" data-permission="settings">＋ Add User</button></div>
+    <div class="card"><div class="card-title"><h2>Users & Roles</h2><a>Manage Permissions →</a></div><div class="role-grid"><div><b>Owner / Admin</b><small>Full visibility, alerts, reports and settings</small><span>All permissions</span></div><div><b>Manager</b><small>Inventory decisions, approvals and suppliers</small><span>Inventory · Suppliers · Reports</span></div><div><b>Store Staff</b><small>Sales + store-stock updates</small><span>Sales · Store Stock</span></div><div><b>Warehouse Staff</b><small>Storage stock + transfers</small><span>Warehouse · Transfers</span></div><div><b>Supplier</b><small>Purchase / restock requests</small><span>Optional supplier portal</span></div></div></div>
+    <div class="card table-card"><div class="card-title"><h2>Permission Matrix</h2></div><div class="permission-table"><div><b>Module</b><b>Admin</b><b>Manager</b><b>Store Staff</b><b>Warehouse</b></div><div><span>Inventory</span><span>✓</span><span>✓</span><span>✓</span><span>✓</span></div><div><span>Sales</span><span>✓</span><span>✓</span><span>✓</span><span>—</span></div><div><span>Suppliers</span><span>✓</span><span>✓</span><span>—</span><span>—</span></div><div><span>Reports</span><span>✓</span><span>✓</span><span>—</span><span>—</span></div><div><span>Settings</span><span>✓</span><span>—</span><span>—</span><span>—</span></div></div></div>
+    <div class="card table-card"><div class="card-title"><h2>Accounts</h2></div><div id="userTable"></div></div>
+    <div class="card"><div class="card-title"><h2>Account Security</h2><small>Change your login password</small></div><form id="changePasswordForm" style="max-width:400px"><label>Current Password<input id="currentPwd" name="current_password" type="password" required></label><label>New Password<input id="newPwd" name="new_password" type="password" required minlength="6" placeholder="At least 6 characters"></label><label>Confirm New Password<input id="confirmPwd" name="confirm_password" type="password" required minlength="6"></label><button type="submit" class="primary-btn">Update Password</button></form></div>
+  </div></main>
+</section>
+<script src="script.js"></script>
+
+<!-- ═══════════════════════════════════════════════════════
+     WORKER PAGE — Read-only stock view (no sidebar nav)
+═══════════════════════════════════════════════════════ -->
+<div id="workerPage" class="hidden worker-shell">
+  <div class="worker-topbar">
+    <div class="worker-brand">🏪 <b>RetailFlow</b></div>
+    <div class="worker-user">
+      <span id="workerUserName">—</span>
+      <small id="workerRoleLabel" class="role-badge">Worker</small>
+      <button class="logout-btn" id="logoutBtn2" onclick="logout(false)" title="Logout">⏻</button>
+    </div>
+  </div>
+
+  <div class="worker-content">
+    <div class="worker-header">
+      <h1>📦 Stock Overview</h1>
+      <p>Real-time view of store and warehouse inventory. Contact your manager to make changes.</p>
+    </div>
+
+    <div class="worker-stats">
+      <div class="wk-stat blue"><b id="workerTotalProducts">—</b><small>Total Products</small></div>
+      <div class="wk-stat orange"><b id="workerLowCount">—</b><small>Low Stock Items</small></div>
+      <div class="wk-stat red"><b id="workerOutCount">—</b><small>Out of Stock</small></div>
+    </div>
+
+    <div class="worker-grid">
+      <div class="card worker-table-card">
+        <div class="card-title"><h2>🏪 Store Stock</h2><small>Items currently in the shop floor</small></div>
+        <div class="wk-head"><span>Product</span><span>Category</span><span>Qty</span><span>Status</span></div>
+        <div id="workerStoreStock"><div class="empty-state">Loading...</div></div>
+      </div>
+
+      <div class="card worker-table-card">
+        <div class="card-title"><h2>🏬 Warehouse Stock</h2><small>Items in storage / back-room</small></div>
+        <div class="wk-head"><span>Product</span><span>Category</span><span>Qty</span><span>Status</span></div>
+        <div id="workerWhStock"><div class="empty-state">Loading...</div></div>
+      </div>
+    </div>
+
+    <div class="worker-notice">
+      🔒 You have <b>read-only</b> access. To update stock or record a sale, ask an <b>Employee</b> or <b>Manager</b>.
+    </div>
+  </div>
+</div>
+</body>
+</html>
